@@ -4,7 +4,7 @@ import pyttsx3
 import requests
 import pywhatkit  # to play any song from YouTube
 import wikipedia  # to open any website
-import os
+import os  #to use the system functions.files
 import pyjokes  # to tell jokes
 from datetime import datetime
 from sympy import sympify  # to calculate math expressions
