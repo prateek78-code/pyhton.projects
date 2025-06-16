@@ -4,7 +4,7 @@ import pyttsx3
 import requests
 import pywhatkit  # to play any song from YouTube
 import wikipedia  # to open any website
-import os  #to use the system functions.files
+import os
 import pyjokes  # to tell jokes
 from datetime import datetime
 from sympy import sympify  # to calculate math expressions
@@ -12,14 +12,23 @@ from sympy import sympify  # to calculate math expressions
 # Initialize recognizer and text-to-speech engine
 recognizer = sr.Recognizer()
 engine = pyttsx3.init()
-newsAPI = "7c562e154c1349dcabe8fece1a27bfdb"
-weather_key = "YOUR_OPENWEATHER_API_KEY"  # replace with your real API key
+newsAPI = "YOUR_NEWS_API_KEY"
+weather_key = "YOUR_OPENWEATHER_API_KEY"  
 
 # Speak text aloud
 def speak(text):
     print("Speaking:", text)
     engine.say(text)
     engine.runAndWait()
+
+# Stop current YouTube playback (by killing browser)
+def stop_current_playback():
+    try:
+        # For Windows and Chrome; replace with your browser if needed
+        os.system("taskkill /im chrome.exe /f")
+        speak("Stopped current playback.")
+    except Exception as e:
+        print("Error stopping browser:", e)
 
 # Process voice command
 def process_command(c):
@@ -74,6 +83,7 @@ def process_command(c):
 
     elif c.startswith("play"):
         try:
+            stop_current_playback()  # Stop existing playback
             song_name = c.split(" ", 1)[1]
             speak(f"Playing {song_name}")
             pywhatkit.playonyt(song_name)
